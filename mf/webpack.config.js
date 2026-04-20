@@ -14,6 +14,9 @@ const mfPublicPath = rawMfPublic
   ? `${rawMfPublic.replace(/\/$/, '')}/`
   : `http://${publicHost}:${MF_PORT}/`;
 
+/** Origin MF без завершающего слэша — для fetch /v1 при встраивании в host (иначе /v1 уходит на :3000). */
+const mfPublicOrigin = mfPublicPath.replace(/\/$/, '');
+
 /** Имя remote в host ATM должно совпадать с config.ui.remoteKey (замените при клонировании) */
 const remoteName =
   process.env.ATM_TEMPLATE_REMOTE_NAME || 'remote_template';
@@ -46,6 +49,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.ATM_TEMPLATE_REMOTE_NAME': JSON.stringify(remoteName),
+      'process.env.ATM_TOOL_MF_PUBLIC_ORIGIN': JSON.stringify(mfPublicOrigin),
     }),
     new ModuleFederationPlugin({
       name: remoteName,

@@ -44,8 +44,8 @@ export default function App() {
         <p className="err">{error || 'Нет данных'}</p>
         <p className="muted">
           Проверьте, что микросервис запущен и заданы <code>DATABASE_URL</code>,{' '}
-          <code>ATM_TOOL_ID</code> или <code>ATM_TOOL_NAME</code>. В dev MF проксирует{' '}
-          <code>/v1</code> на <code>TOOL_API_PROXY_TARGET</code>.
+          <code>ATM_TOOL_ID</code> или <code>ATM_TOOL_NAME</code>. Запросы к API идут на origin MF
+          (прокси <code>/v1</code> → <code>TOOL_API_PROXY_TARGET</code> в dev / nginx в Docker).
         </p>
       </div>
     );
