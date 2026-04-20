@@ -20,6 +20,7 @@ module.exports = {
     filename: '[name].[contenthash].js',
     publicPath: isProd ? '/' : `http://${publicHost}:${MF_PORT}/`,
     clean: true,
+    uniqueName: 'atm_remote',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
