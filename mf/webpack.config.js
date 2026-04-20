@@ -71,7 +71,7 @@ module.exports = {
     host: '0.0.0.0',
     allowedHosts: 'all',
     hot: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    /** Не задавать Access-Control-Allow-Origin здесь: /v1 проксируется на tool-api с cors({ origin: true }) — иначе два значения в ответе. */
     historyApiFallback: true,
     proxy: [
       {
