@@ -3,11 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { ModuleFederationPlugin } = require('webpack').container;
 
-const isProd = process.env.NODE_ENV === 'production';
 const publicHost = process.env.ATM_DEV_PUBLIC_HOST || 'localhost';
 const MF_PORT = Number(process.env.ATM_TEMPLATE_MF_PORT || 3090);
 const apiProxy =
   process.env.TOOL_API_PROXY_TARGET || `http://127.0.0.1:${process.env.TOOL_API_PORT || 8080}`;
+
+/** Абсолютный URL чанков MF. Нельзя использовать '/' при встраивании с другого origin (host) — remoteEntry тогда грузит чанки с порта страницы (:3000). */
+const rawMfPublic = String(process.env.ATM_MF_PUBLIC_PATH || '').trim();
+const mfPublicPath = rawMfPublic
+  ? `${rawMfPublic.replace(/\/$/, '')}/`
+  : `http://${publicHost}:${MF_PORT}/`;
 
 /** Имя remote в host ATM должно совпадать с config.ui.remoteKey (замените при клонировании) */
 const remoteName =
@@ -18,7 +23,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
-    publicPath: isProd ? '/' : `http://${publicHost}:${MF_PORT}/`,
+    publicPath: mfPublicPath,
     clean: true,
     uniqueName: 'atm_remote',
   },

@@ -18,6 +18,8 @@ services:
       context: ./mf
       args:
         ATM_TEMPLATE_REMOTE_NAME: ${ATM_TEMPLATE_REMOTE_NAME:-remote_template}
+        ATM_DEV_PUBLIC_HOST: ${ATM_DEV_PUBLIC_HOST:-localhost}
+        ATM_TEMPLATE_MF_PORT: ${TOOL_MF_PUBLISH_PORT:-8092}
     restart: unless-stopped
     depends_on:
       - tool-api

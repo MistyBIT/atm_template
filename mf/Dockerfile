@@ -5,6 +5,12 @@ WORKDIR /app
 ARG ATM_TEMPLATE_REMOTE_NAME=remote_template
 ENV ATM_TEMPLATE_REMOTE_NAME=${ATM_TEMPLATE_REMOTE_NAME}
 
+# Публичный URL чанков MF (иначе при NODE_ENV=production webpack ставит publicPath '/' → чанки с origin host).
+ARG ATM_DEV_PUBLIC_HOST=localhost
+ARG ATM_TEMPLATE_MF_PORT=8092
+ENV ATM_DEV_PUBLIC_HOST=${ATM_DEV_PUBLIC_HOST}
+ENV ATM_TEMPLATE_MF_PORT=${ATM_TEMPLATE_MF_PORT}
+
 # Не задавать NODE_ENV=production до npm install — иначе npm не ставит devDependencies (webpack).
 COPY package.json ./
 RUN npm install
